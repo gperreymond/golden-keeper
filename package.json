@@ -1,0 +1,53 @@
+{
+  "name": "golden-keeper",
+  "version": "1.0.0",
+  "description": "Monitoring and analysing cloud provider princing",
+  "repository": "git@github.com:gperreymond/golden-keeper.git",
+  "authors": [
+    "Gilles Perreymond <gperreymond@gmail.com>"
+  ],
+  "license": "MPL-2.0",
+  "scripts": {
+    "start:moleculer": "moleculer-runner --repl --hot --config moleculer.config.js services",
+    "standard": "standard",
+    "test:moleculer": "jest --coverage --verbose --detectOpenHandles --forceExit",
+    "start": "moleculer-runner --config moleculer.config.js services"
+  },
+  "dependencies": {
+    "@hapi/boom": "9.1.1",
+    "@hapi/hoek": "9.1.1",
+    "@hapi/joi": "17.1.1",
+    "aws-sdk": "2.824.0",
+    "axios": "0.21.1",
+    "dotenv": "8.2.0",
+    "glob": "7.1.6",
+    "glob-promise": "3.4.0",
+    "lodash": "4.17.20",
+    "moleculer": "0.14.12",
+    "moleculer-cron": "0.0.2",
+    "moleculer-db": "0.8.11",
+    "moleculer-db-adapter-rethinkdb": "0.2.9",
+    "moleculer-repl": "0.6.4",
+    "moleculer-web": "0.9.1",
+    "nconf": "0.11.1",
+    "rethinkdb": "2.4.2",
+    "uuid": "8.3.2"
+  },
+  "devDependencies": {
+    "jest": "26.6.3",
+    "standard": "16.0.3"
+  },
+  "standard": {
+    "ignore": [],
+    "globals": [
+      "describe",
+      "test",
+      "expect",
+      "beforeAll",
+      "afterAll",
+      "beforeEach",
+      "afterEach",
+      "jest"
+    ]
+  }
+}

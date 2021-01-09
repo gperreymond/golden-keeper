@@ -1,0 +1,36 @@
+name: Moleculer
+
+defaults:
+  run:
+    working-directory: ./
+
+on:
+  push:
+    branches:
+    - main
+  pull_request:
+    branches:
+    - main
+
+jobs:
+  linter:
+    runs-on: ubuntu-latest
+    container:
+      image:  node:12.19-jessie
+    steps:
+      - uses: actions/checkout@v1
+      - run: yarn
+      - run: yarn standard
+        env:
+          NODE_ENV: test
+  tests:
+    needs: linter
+    runs-on: ubuntu-latest
+    container:
+      image:  node:12.19-jessie
+    steps:
+      - uses: actions/checkout@v1
+      - run: yarn
+      - run: yarn test:moleculer
+        env:
+          NODE_ENV: test
