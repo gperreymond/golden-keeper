@@ -16,7 +16,7 @@ jobs:
   linter:
     runs-on: ubuntu-latest
     container:
-      image:  node:12.19-jessie
+      image: node:12.19-alpine3.9
     steps:
       - uses: actions/checkout@v1
       - run: yarn
@@ -27,7 +27,7 @@ jobs:
     needs: linter
     runs-on: ubuntu-latest
     container:
-      image:  node:12.19-jessie
+      image: node:12.19-alpine3.9
     steps:
       - uses: actions/checkout@v1
       - run: yarn
