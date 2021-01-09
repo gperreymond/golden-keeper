@@ -1,0 +1,7 @@
+codecov:
+  require_ci_to_pass: yes
+  token: secret:dyvbNrRFVSU9B5TfT/b6vFEs608qNF0rsX4hfp0/UuFh6+OZ4xL6FDpIjoa1t+kQlOrY3nzobwLLx5R3eONU5cBHJ7KklKOd/yN/lm1AyeM=
+  coverage:
+    precision: 2
+    round: down
+    range: "70...100"

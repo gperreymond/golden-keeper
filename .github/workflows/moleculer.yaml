@@ -34,3 +34,4 @@ jobs:
       - run: yarn test:moleculer
         env:
           NODE_ENV: test
+      - run: cat codecov.yaml | curl --data-binary @- https://codecov.io/validate
