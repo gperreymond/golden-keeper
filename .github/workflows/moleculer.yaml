@@ -30,6 +30,7 @@ jobs:
       image: node:12.19-alpine3.9
     steps:
       - uses: actions/checkout@v1
+      - run: apk --no-cache add curl
       - run: yarn
       - run: yarn test:moleculer
         env:
