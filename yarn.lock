@@ -2887,6 +2887,13 @@ istanbul-reports@^3.0.2:
     html-escaper "^2.0.0"
     istanbul-lib-report "^3.0.0"
 
+jest-aws-sdk-mock@1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/jest-aws-sdk-mock/-/jest-aws-sdk-mock-1.0.2.tgz#a4d8d156696228dc5f1ed23fbb61cd7905b220c4"
+  integrity sha512-mEJosCwbP9SpigBelkJ57CucKiGBzQZsnxVF2ooMfs3p+cVmY0qJDGxd/gWbPnxd0vd6j4Oq8jUi7zS2jIURvA==
+  dependencies:
+    lodash.get "^4.4.2"
+
 jest-changed-files@^26.6.2:
   version "26.6.2"
   resolved "https://registry.yarnpkg.com/jest-changed-files/-/jest-changed-files-26.6.2.tgz#f6198479e1cc66f22f9ae1e22acaa0b429c042d0"
@@ -3504,6 +3511,11 @@ locate-path@^5.0.0:
   integrity sha512-t7hw9pI+WvuwNJXwk5zVHpyhIqzg2qTlklJOf0mVxGSbe3Fp2VieZcduNYjaLDoy6p9uGpQEGWG87WpMKlNq8g==
   dependencies:
     p-locate "^4.1.0"
+
+lodash.get@^4.4.2:
+  version "4.4.2"
+  resolved "https://registry.yarnpkg.com/lodash.get/-/lodash.get-4.4.2.tgz#2d177f652fa31e939b4438d5341499dfa3825e99"
+  integrity sha1-LRd/ZS+jHpObRDjVNBSZ36OCXpk=
 
 lodash.sortby@^4.7.0:
   version "4.7.0"

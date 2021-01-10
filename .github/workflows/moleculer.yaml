@@ -34,7 +34,7 @@ jobs:
       image: node:12.19-alpine3.9
     steps:
       - name: Update alpine packages
-        run: apk add --update bash curl
+        run: apk add --update bash curl git
       - name: Checkout
         uses: actions/checkout@v2.3.4
       - name: Install packages

@@ -27,6 +27,5 @@ module.exports = {
     ]
   },
   async started (broker) {
-    console.log('***** broker started *****')
   }
 }
