@@ -9,7 +9,7 @@ const broker = new ServiceBroker({
 })
 
 beforeAll(async () => {
-  await broker.loadService('./services/aws.service')
+  await broker.loadService('./services/cqrs/aws-domain.service')
   await broker.start()
 })
 

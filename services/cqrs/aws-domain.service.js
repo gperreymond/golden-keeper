@@ -1,4 +1,4 @@
-const CQRSMixin = require('../cqrs/cqrs.mixin')
+const CQRSMixin = require('../../cqrs/cqrs.mixin')
 
 module.exports = {
   name: 'AwsDomain',
@@ -8,7 +8,7 @@ module.exports = {
     // Queries
     GetAwsEc2InstancesListByRegionQuery: {
       cache: false,
-      ...require('../cqrs/domains/aws/queries/GetAwsEc2InstancesListByRegionQuery.js').getAction()
+      ...require('../../cqrs/domains/aws/queries/GetAwsEc2InstancesListByRegionQuery.js').getAction()
     }
   },
   methods: {
