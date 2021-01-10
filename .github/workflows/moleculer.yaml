@@ -1,4 +1,4 @@
-name: moleculer tests
+name: Moleculer
 
 defaults:
   run:
@@ -64,6 +64,6 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           flags: Moleculer
-          directory: ./coverage
+          directory: ./
           fail_ci_if_error: true
           path_to_write_report: ./coverage/codecov_report.txt
