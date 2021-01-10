@@ -55,10 +55,11 @@ jobs:
     steps:
       - name: Update alpine packages
         run: apk add --update bash curl git
-      - name: Restore node_modules
+      - name: Restore coverage
         uses: actions/download-artifact@v2
         with:
           name: artifact-coverage
+          path: coverage
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1.2.1
         with:
