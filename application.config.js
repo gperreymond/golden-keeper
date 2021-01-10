@@ -24,6 +24,10 @@ const APP_RETHINKDB_HOSTNAME = nconf.get('APP_RETHINKDB_HOSTNAME') || 'localhost
 const APP_RETHINKDB_USERNAME = nconf.get('APP_RETHINKDB_USERNAME') || 'admin'
 const APP_RETHINKDB_PASSWORD = nconf.get('APP_RETHINKDB_PASSWORD') || 'password'
 
+const APP_RABBITMQ_HOSTNAME = nconf.get('APP_RABBITMQ_HOSTNAME') || 'localhost'
+const APP_RABBITMQ_USERNAME = nconf.get('APP_RABBITMQ_USERNAME') || 'admin'
+const APP_RABBITMQ_PASSWORD = nconf.get('APP_RABBITMQ_PASSWORD') || 'password'
+
 module.exports = {
   moleculer: {
     port: APP_MOLECULER_API_GATEWAY_PORT,
@@ -33,7 +37,11 @@ module.exports = {
     port: APP_NATS_PORT
   },
   rabbitmq: {
-    port: APP_RABBITMQ_PORT
+    hostname: APP_RABBITMQ_HOSTNAME,
+    port: APP_RABBITMQ_PORT,
+    username: APP_RABBITMQ_USERNAME,
+    password: APP_RABBITMQ_PASSWORD,
+    vhost: 'golden_keeper'
   },
   rethinkdb: {
     hostname: APP_RETHINKDB_HOSTNAME,
