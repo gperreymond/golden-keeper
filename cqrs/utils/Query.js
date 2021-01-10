@@ -1,5 +1,3 @@
-const path = require('path')
-
 class Query {
   constructor () {
     this.action = {}
@@ -14,9 +12,8 @@ class Query {
     this.action.handler = value
   }
 
-  setModel (value) {
-    const modelFilepath = path.resolve(__dirname, '../..', value)
-    this.action.metadata.cqrs.model = modelFilepath
+  setModel (schema) {
+    this.action.metadata.cqrs.model = schema
   }
 
   getAction () {

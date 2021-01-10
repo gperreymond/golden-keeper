@@ -1,6 +1,21 @@
 const { find } = require('lodash')
+const Boom = require('@hapi/boom')
+const Validator = require('fastest-validator')
+
+const v = new Validator()
 
 module.exports = {
+  hooks: {
+    before: {
+      '*': ['ExtractActionMetadata', 'ValidateCQRSParams']
+    },
+    after: {
+      '*': ['EmitEventSourcing', 'ResponseCQRS']
+    },
+    error: {
+      '*': ['ErrorCQRS']
+    }
+  },
   methods: {
     // The action is a part of CQRS or not ?
     async ExtractActionMetadata (ctx) {
@@ -16,17 +31,23 @@ module.exports = {
         }
       }
     },
-    // The action is a "Command" or a "Query"? We need to validate params
+    // The action is a 'Command' or a 'Query'? We need to validate params
     async ValidateCQRSParams (ctx) {
       const { meta: { cqrs = false } = { meta: { cqrs: false } } } = ctx
       if (cqrs !== false && cqrs.model) {
-        const schema = require(cqrs.model)
-        await schema.validateAsync(ctx.params).catch(err => {
-          throw err
-        })
+        const schema = cqrs.model
+        const check = v.compile(schema)
+        const validate = check(ctx.params)
+        if (validate !== true) {
+          throw Boom.boomify(new Error('ValidateCQRSParamsError'), {
+            statusCode: 400,
+            decorate: validate
+          })
+        }
       }
+      return true
     },
-    // The action is a "Command" ? We need to create in eventstore
+    // The action is a 'Command' ? We need to create in eventstore
     async EmitEventSourcing (ctx, res) {
       const { meta: { cqrs = false } = { meta: { cqrs: false } } } = ctx
       if (cqrs !== false && cqrs.eventType && cqrs.type === 'Command') {
@@ -44,7 +65,7 @@ module.exports = {
       }
       return res
     },
-    // The action is a "Command" or a "Query" ? With no error!
+    // The action is a 'Command' or a 'Query' ? With no error!
     async ResponseCQRS (ctx, res) {
       this.logger.info(`Response occurred when '${ctx.action.name}' action was called`)
       const { meta: { cqrs = false } = { meta: { cqrs: false } } } = ctx
@@ -60,7 +81,7 @@ module.exports = {
       // Not CQRS
       return res
     },
-    // The action is a "Command" or a "Query" ? Oh dude error incomming!
+    // The action is a 'Command' or a 'Query' ? Oh dude error incomming!
     async ErrorCQRS (ctx, err) {
       this.logger.error(`Error occurred when '${ctx.action.name}' action was called`)
       const { meta: { cqrs = false } = { meta: { cqrs: false } } } = ctx
