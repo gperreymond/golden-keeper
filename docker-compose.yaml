@@ -2,35 +2,21 @@ version: "3.7"
 
 services:
 
-  timescaledb:
-    image: "timescale/timescaledb:2.0.0-pg12"
+  rethinkdb:
+    image: "rethinkdb:2.4.1-buster-slim"
     restart: "always"
-    environment:
-      POSTGRES_PASSWORD: "${APP_TIMESCALEDB_PASSWORD}"
-    volumes:
-      - timescaledb_data:/var/lib/postgresql/data
-    networks:
-      - "public"
-    ports:
-      - "5432:5432/tcp"
-
-  pgadmin:
-    image: "dpage/pgadmin4:4.29"
-    restart: "always"
-    environment:
-      PGADMIN_DEFAULT_EMAIL: "${PGADMIN_DEFAULT_EMAIL}"
-      PGADMIN_DEFAULT_PASSWORD: "${PGADMIN_DEFAULT_PASSWORD}"
+    command: "rethinkdb --bind all --initial-password ${APP_RETHINKDB_PASSWORD}"
     networks:
       - "public"
     volumes:
-       - pgadmin_data:/root/.pgadmin
+      - "rethinkdb_data:/data"
     ports:
-      - "5050:80/tcp"
+      - "8080:8080/tcp"
+      - "28015:28015/tcp"
 
 volumes:
 
-  timescaledb_data:
-  pgadmin_data:
+  rethinkdb_data:
 
 networks:
 
