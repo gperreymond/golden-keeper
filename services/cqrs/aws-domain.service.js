@@ -10,7 +10,5 @@ module.exports = {
       cache: false,
       ...require('../../cqrs/domains/aws/queries/GetAwsEc2InstancesListByRegionQuery.js').getAction()
     }
-  },
-  methods: {
   }
 }

@@ -40,8 +40,7 @@ module.exports = {
     hostname: APP_RABBITMQ_HOSTNAME,
     port: APP_RABBITMQ_PORT,
     username: APP_RABBITMQ_USERNAME,
-    password: APP_RABBITMQ_PASSWORD,
-    vhost: 'golden_keeper'
+    password: APP_RABBITMQ_PASSWORD
   },
   rethinkdb: {
     hostname: APP_RETHINKDB_HOSTNAME,
