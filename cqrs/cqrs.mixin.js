@@ -30,6 +30,7 @@ module.exports = {
           cqrs
         }
       }
+      return true
     },
     // The action is a 'Command' or a 'Query'? We need to validate params
     async ValidateCQRSParams (ctx) {

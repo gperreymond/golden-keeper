@@ -38,8 +38,7 @@ module.exports = {
       mappingPolicy: 'restrict',
       aliases: {
         'GET status/liveness': 'ApiGateway.GetStatusLiveness',
-        'GET status/Readiness': 'ApiGateway.GetStatusReadiness',
-        'GET api/v1/aws/ec2/list': 'AwsDomain.GetAwsEc2InstancesListByRegionQuery'
+        'GET status/Readiness': 'ApiGateway.GetStatusReadiness'
       }
     }]
   }

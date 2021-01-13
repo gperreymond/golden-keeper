@@ -5,10 +5,10 @@ module.exports = {
   mixins: [CQRSMixin],
   actions: {
     // Commands
-    // Queries
-    GetAwsEc2InstancesListByRegionQuery: {
+    CollectAwsEc2InstancesDetailsByRegionCommand: {
       cache: false,
-      ...require('../../cqrs/domains/aws/queries/GetAwsEc2InstancesListByRegionQuery.js').getAction()
+      ...require('../../cqrs/domains/aws/commands/CollectAwsEc2InstancesDetailsByRegionCommand.js').getAction()
     }
+    // Queries
   }
 }

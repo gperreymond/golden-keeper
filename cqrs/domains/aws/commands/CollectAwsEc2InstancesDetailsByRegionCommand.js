@@ -1,4 +1,5 @@
 const AWS = require('aws-sdk')
+const { camelCase } = require('lodash')
 
 const { Query } = require('../../../utils')
 
@@ -27,7 +28,7 @@ const handler = async function (ctx) {
   }
   const data = await describeInstancesSync(region, params)
   data.Reservations.map(reservation => {
-    reservation.Instances.map(instance => {
+    reservation.Instances.map(async instance => {
       const {
         InstanceId: instanceId = '',
         InstanceType: instanceType = '',
@@ -36,7 +37,7 @@ const handler = async function (ctx) {
         PrivateIpAddress: privateIpAddress = '',
         PublicDnsName: publicDnsName = '',
         PublicIpAddress: publicIpAddress = '',
-        State: { Name: state } = {},
+        State: { Name: state } = { Name: 'none' },
         Tags: tags = []
       } = instance
       const data = {
@@ -56,7 +57,33 @@ const handler = async function (ctx) {
     })
     return true
   })
-  return result
+  // Publish to timeseries eventsource
+  const total = result.data.length
+  let current = 0
+  do {
+    // Prepare timeserie
+    const timeserie = { time: new Date().getTime(), count: 1, labels: {} }
+    const props = Object.keys(result.data[current])
+    props.map(key => {
+      timeserie.labels[camelCase(key)] = result.data[current][key]
+      result.data[current].tags.map(tag => {
+        const key = camelCase(`tags_${tag.Key}`)
+        timeserie.labels[key] = tag.Value
+        return true
+      })
+      // Delete not mandatory props
+      delete timeserie.labels.privateDnsName
+      delete timeserie.labels.privateIpAddress
+      delete timeserie.labels.publicDnsName
+      delete timeserie.labels.publicIpAddress
+      delete timeserie.labels.tags
+      return true
+    })
+    await this.broker.call('Timeseries.AwsEcs2InstancePublisher', timeserie)
+    current += 1
+  } while (current < total)
+  // Return the result
+  return true
 }
 
 const query = new Query()
