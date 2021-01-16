@@ -38,7 +38,6 @@ module.exports = {
       this.logger.info('rabbitmq connected')
     })
     this.metadata.$rabbitmq.on('disconnected', (err) => {
-      if (!err) { return false }
       this.logger.error(err.message)
     })
   },

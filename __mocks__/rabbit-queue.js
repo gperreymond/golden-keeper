@@ -1,13 +1,18 @@
+const EventEmitter = require('events').EventEmitter
+const util = require('util')
+
 class Rabbit {
   constructor () {
+    // call the super constructor to initialize `this`
+    EventEmitter.call(this)
+    // your own initialization of `this` follows here
     this.$queues = {}
   }
-
-  on () {}
 
   createQueue (target, options, callback) {
     this.$queues[target] = {}
     this.$queues[target].fn = callback
+    if (options.error_rabbitmq) { return this.emit('disconnected') }
   }
 
   bindToExchange (target, exchange, key) {
@@ -28,3 +33,5 @@ class Rabbit {
 module.exports = {
   Rabbit
 }
+
+util.inherits(Rabbit, EventEmitter)

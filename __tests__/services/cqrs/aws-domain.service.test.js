@@ -9,6 +9,18 @@ const broker = new ServiceBroker({
 })
 
 beforeAll(async () => {
+  await broker.createService({
+    name: 'RethinkDBAdapterAwsEc2Instances',
+    actions: {
+      create: {
+        async handler (ctx) {
+          const { labels: { instanceId } } = ctx.params
+          if (instanceId === 'test_error') { return Promise.reject(new Error('Error occured')) }
+          return true
+        }
+      }
+    }
+  })
   await broker.createService(require('../../../services/timeseries.service.js'))
   await broker.createService(require('../../../services/cqrs/aws-domain.service.js'))
   await broker.start()
@@ -51,6 +63,17 @@ describe('service AwsDomain, action CollectAwsEc2InstancesDetailsByRegionCommand
     expect(status).toEqual(false)
     expect(source).toEqual('AwsDomain.CollectAwsEc2InstancesDetailsByRegionCommand')
     expect(error.message).toEqual('Cannot convert undefined or null to object')
+  })
+  test('should return an good result, but an error occured when trying to insert in rethinkdb', async () => {
+    AWSMock.mock('EC2', 'describeInstances', function (params, callback) {
+      callback(null, { Reservations: [{ Instances: [{ InstanceId: 'test_error', Tags: [{ Key: 'key', Value: 'value' }] }] }] })
+    })
+    const { result, error, source, status } = await broker.call('AwsDomain.CollectAwsEc2InstancesDetailsByRegionCommand', { region: 'eu-west-3' })
+    AWSMock.restore('EC2')
+    expect(error).toEqual(undefined)
+    expect(status).toEqual(true)
+    expect(source).toEqual('AwsDomain.CollectAwsEc2InstancesDetailsByRegionCommand')
+    expect(result).toEqual(true)
   })
   test('should return an good result', async () => {
     AWSMock.mock('EC2', 'describeInstances', function (params, callback) {
