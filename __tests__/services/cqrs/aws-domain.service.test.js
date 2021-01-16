@@ -1,4 +1,5 @@
 const AWSMock = require('jest-aws-sdk-mock')
+require('../../../__mocks__/axios-mock')
 
 const { ServiceBroker } = require('moleculer')
 const broker = new ServiceBroker({
@@ -28,6 +29,16 @@ beforeAll(async () => {
 
 afterAll(async () => {
   await broker.stop()
+})
+
+describe('service AwsDomain, action GetAwsEc2InstancesPricingByRegionCommand', () => {
+  test('should return an good result', async () => {
+    const { result, error, source, status } = await broker.call('AwsDomain.GetAwsEc2InstancesPricingByRegionCommand')
+    expect(error).toEqual(undefined)
+    expect(status).toEqual(true)
+    expect(source).toEqual('AwsDomain.GetAwsEc2InstancesPricingByRegionCommand')
+    expect(result).toEqual(true)
+  })
 })
 
 describe('service AwsDomain, action CollectAwsEc2InstancesDetailsByRegionCommand', () => {

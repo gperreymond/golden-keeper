@@ -8,6 +8,10 @@ module.exports = {
     CollectAwsEc2InstancesDetailsByRegionCommand: {
       cache: false,
       ...require('../../cqrs/domains/aws/commands/CollectAwsEc2InstancesDetailsByRegionCommand.js').getAction()
+    },
+    GetAwsEc2InstancesPricingByRegionCommand: {
+      cache: false,
+      ...require('../../cqrs/domains/aws/commands/GetAwsEc2InstancesPricingByRegionCommand.js').getAction()
     }
     // Queries
   }
