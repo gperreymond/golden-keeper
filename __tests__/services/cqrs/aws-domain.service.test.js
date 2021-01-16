@@ -22,6 +22,18 @@ beforeAll(async () => {
       }
     }
   })
+  await broker.createService({
+    name: 'RethinkDBAdapterAwsEc2InstancesPricing',
+    actions: {
+      create: {
+        async handler (ctx) {
+          const { labels: { instanceId } } = ctx.params
+          if (instanceId === 'test_error') { return Promise.reject(new Error('Error occured')) }
+          return true
+        }
+      }
+    }
+  })
   await broker.createService(require('../../../services/timeseries.service.js'))
   await broker.createService(require('../../../services/cqrs/aws-domain.service.js'))
   await broker.start()

@@ -2,7 +2,6 @@ jest.mock('axios')
 const axios = require('axios')
 
 axios.get = async (url, options) => {
-  console.log(url)
   switch (url) {
     case 'https://a0.p.awsstatic.com/pricing/1.0/ec2/region/eu-west-1/ondemand/linux/index.json':
       return {

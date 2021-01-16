@@ -64,7 +64,7 @@ const handler = async function (ctx) {
   let current = 0
   do {
     // Prepare timeserie
-    const timeserie = { time: new Date().getTime(), count: 1, labels: {} }
+    const timeserie = { time: new Date().getTime(), labels: {} }
     const props = Object.keys(result.data[current])
     props.map(key => {
       timeserie.labels[camelCase(key)] = result.data[current][key]
