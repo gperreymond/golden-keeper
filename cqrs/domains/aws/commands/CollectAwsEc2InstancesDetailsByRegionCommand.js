@@ -29,9 +29,11 @@ const handler = async function (ctx) {
   const data = await describeInstancesSync(region, params)
   data.Reservations.map(reservation => {
     reservation.Instances.map(async instance => {
+      console.log(instance)
       const {
         InstanceId: instanceId = '',
         InstanceType: instanceType = '',
+        LaunchTime: launchTime = new Date(),
         Placement: { AvailabilityZone: availabilityZone } = { AvailabilityZone: '' },
         PrivateDnsName: privateDnsName = '',
         PrivateIpAddress: privateIpAddress = '',
@@ -43,6 +45,7 @@ const handler = async function (ctx) {
       const data = {
         instanceId,
         instanceType,
+        launchTime: new Date(launchTime).getTime(),
         region: availabilityZone.slice(0, -1),
         state,
         privateDnsName,
