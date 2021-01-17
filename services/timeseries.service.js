@@ -1,4 +1,4 @@
-const RabbitMQMixin = require('../rabbitmq/rabbitmq.mixin')
+const RabbitMQMixin = require('../timeseries/rabbitmq.mixin')
 
 const { rabbitmq } = require('../application.config')
 
@@ -21,23 +21,21 @@ module.exports = {
     }
   },
   actions: {
-    AwsEcs2InstancePublisher: async function (ctx) {
-      await ctx.meta.$rabbitmq.publish('moleculer.timeseries-aws-ec2-instance.queue', ctx.params)
-      return true
+    AwsEcs2InstancePublisher: {
+      cache: false,
+      ...require('../timeseries/publishers/AwsEcs2InstancePublisher')
     },
-    AwsEc2InstanceSubscriber: async function (ctx) {
-      // console.log(ctx.params)
-      await ctx.broker.call('RethinkDBAdapterAwsEc2Instances.create', ctx.params)
-      return true
+    AwsEc2InstanceSubscriber: {
+      cache: false,
+      ...require('../timeseries/subscribers/AwsEc2InstanceSubscriber')
     },
-    AwsEcs2InstancePricingPublisher: async function (ctx) {
-      await ctx.meta.$rabbitmq.publish('moleculer.timeseries-aws-ec2-instance-pricing.queue', ctx.params)
-      return true
+    AwsEcs2InstancePricingPublisher: {
+      cache: false,
+      ...require('../timeseries/publishers/AwsEcs2InstancePricingPublisher')
     },
-    AwsEc2InstancePricingSubscriber: async function (ctx) {
-      // console.log(ctx.params)
-      await ctx.broker.call('RethinkDBAdapterAwsEc2InstancesPricing.create', ctx.params)
-      return true
+    AwsEc2InstancePricingSubscriber: {
+      cache: false,
+      ...require('../timeseries/subscribers/AwsEc2InstancePricingSubscriber')
     }
   }
 }

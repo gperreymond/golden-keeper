@@ -7,11 +7,11 @@ module.exports = {
     // Commands
     CollectAwsEc2InstancesDetailsByRegionCommand: {
       cache: false,
-      ...require('../../cqrs/domains/aws/commands/CollectAwsEc2InstancesDetailsByRegionCommand.js').getAction()
+      ...require('../../cqrs/domains/aws/commands/CollectAwsEc2InstancesDetailsByRegionCommand').getAction()
     },
     GetAwsEc2InstancesPricingByRegionCommand: {
       cache: false,
-      ...require('../../cqrs/domains/aws/commands/GetAwsEc2InstancesPricingByRegionCommand.js').getAction()
+      ...require('../../cqrs/domains/aws/commands/GetAwsEc2InstancesPricingByRegionCommand').getAction()
     }
     // Queries
   }

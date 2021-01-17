@@ -1,5 +1,7 @@
 const axios = require('axios')
+
 const { ServiceBroker } = require('moleculer')
+
 const broker = new ServiceBroker({
   logger: false,
   metrics: {
@@ -9,7 +11,7 @@ const broker = new ServiceBroker({
 
 beforeAll(async () => {
   process.env.APP_MOLECULER_API_GATEWAY_PORT = 4444
-  await broker.createService(require('../../services/api-gateway.service'))
+  await broker.createService(require('../services/api-gateway.service'))
   await broker.start()
 })
 

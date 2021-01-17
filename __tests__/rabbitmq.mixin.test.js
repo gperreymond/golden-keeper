@@ -1,4 +1,4 @@
-const RabbitmqMixin = require('../../rabbitmq/rabbitmq.mixin')
+const RabbitmqMixin = require('../timeseries/rabbitmq.mixin')
 
 beforeAll(async () => {
   RabbitmqMixin.logger = { info: () => {}, error: () => {} }
@@ -11,7 +11,6 @@ describe('mixins Rabbitmq', () => {
     expect(true).toEqual(true)
   })
   test('should emit disconnected', async () => {
-    RabbitmqMixin.created()
     RabbitmqMixin.metadata.$rabbitmq.emit('disconnected', new Error('Error occured'))
     expect(true).toEqual(true)
   })

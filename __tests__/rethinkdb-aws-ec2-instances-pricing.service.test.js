@@ -1,4 +1,5 @@
-require('../../__mocks__/rethinkdb-mock')
+require('../__mocks__/rethinkdb-mock')
+require('../__mocks__/axios-mock')
 
 const { ServiceBroker } = require('moleculer')
 const broker = new ServiceBroker({
@@ -9,7 +10,7 @@ const broker = new ServiceBroker({
 })
 
 beforeAll(async () => {
-  await broker.createService(require('../../services/rethinkdb-aws-ec2-instances.service'))
+  await broker.createService(require('../services/rethinkdb-aws-ec2-instances-pricing.service'))
   await broker.start()
 })
 
@@ -17,8 +18,8 @@ afterAll(async () => {
   await broker.stop()
 })
 
-describe('service rethinkdb-aws-ec2-instances', () => {
-  test('should connect', async () => {
+describe('service rethinkdb-aws-ec2-instances-pricing', () => {
+  test('should return data', async () => {
     expect(true).toEqual(true)
   })
 })

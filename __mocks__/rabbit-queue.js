@@ -20,6 +20,7 @@ class Rabbit {
   }
 
   async publish (target, message) {
+    if (message.error) { throw new Error('An error occured.') }
     await this.$queues[target].fn({
       fields: {
         routingKey: this.$queues[target].key

@@ -1,5 +1,5 @@
 const AWSMock = require('jest-aws-sdk-mock')
-require('../../../__mocks__/axios-mock')
+require('../__mocks__/axios-mock')
 
 const { ServiceBroker } = require('moleculer')
 const broker = new ServiceBroker({
@@ -11,31 +11,17 @@ const broker = new ServiceBroker({
 
 beforeAll(async () => {
   await broker.createService({
-    name: 'RethinkDBAdapterAwsEc2Instances',
+    name: 'Timeseries',
     actions: {
-      create: {
-        async handler (ctx) {
-          const { labels: { instanceId } } = ctx.params
-          if (instanceId === 'test_error') { return Promise.reject(new Error('Error occured')) }
-          return true
-        }
+      AwsEcs2InstancePricingPublisher: {
+        handler: (ctx) => true
+      },
+      AwsEcs2InstancePublisher: {
+        handler: (ctx) => true
       }
     }
   })
-  await broker.createService({
-    name: 'RethinkDBAdapterAwsEc2InstancesPricing',
-    actions: {
-      create: {
-        async handler (ctx) {
-          const { labels: { instanceId } } = ctx.params
-          if (instanceId === 'test_error') { return Promise.reject(new Error('Error occured')) }
-          return true
-        }
-      }
-    }
-  })
-  await broker.createService(require('../../../services/timeseries.service.js'))
-  await broker.createService(require('../../../services/cqrs/aws-domain.service.js'))
+  await broker.createService(require('../services/cqrs/aws-domain.service'))
   await broker.start()
 })
 

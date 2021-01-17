@@ -1,4 +1,4 @@
-const CQRSMixin = require('../../cqrs/cqrs.mixin')
+const CQRSMixin = require('../cqrs/cqrs.mixin')
 
 const testService = {
   name: 'TestDomain',
@@ -18,12 +18,12 @@ const testService = {
     // Commands
     TestCommand: {
       cache: false,
-      ...require('../../__mocks__/cqrs/TestCommand.js').getAction()
+      ...require('../__mocks__/cqrs/TestCommand').getAction()
     },
     // Queries
     TestQuery: {
       cache: false,
-      ...require('../../__mocks__/cqrs/TestQuery.js').getAction()
+      ...require('../__mocks__/cqrs/TestQuery').getAction()
     }
   }
 }

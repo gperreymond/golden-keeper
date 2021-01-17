@@ -21,7 +21,7 @@ const fakeRunnablePromise = {
 rethinkdb.connect = jest.fn((opts, cb) => {
   cb(null, fakeConnection)
 })
-rethinkdb.db = jest.fn(() => rethinkdb)
+rethinkdb.db = jest.fn((name) => rethinkdb)
 rethinkdb.dbList = jest.fn(() => fakeRunnablePromise)
 rethinkdb.dbCreate = jest.fn((database) => fakeRunnablePromise)
 rethinkdb.tableList = jest.fn(() => fakeRunnablePromise)
@@ -44,6 +44,6 @@ const fakeTable = {
   insert: jest.fn(() => fakeRunnablePromise),
   delete: jest.fn(() => fakeRunnablePromise)
 }
-rethinkdb.table = jest.fn(() => fakeTable)
+rethinkdb.table = jest.fn((name) => fakeTable)
 
 module.exports = rethinkdb

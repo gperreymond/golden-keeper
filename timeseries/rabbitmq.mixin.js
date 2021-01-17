@@ -24,6 +24,7 @@ module.exports = {
   methods: {
     async GetRabbitmq (ctx) {
       ctx.meta.$rabbitmq = this.metadata.$rabbitmq
+      return true
     }
   },
   created () {
@@ -38,7 +39,7 @@ module.exports = {
       this.logger.info('rabbitmq connected')
     })
     this.metadata.$rabbitmq.on('disconnected', (err) => {
-      this.logger.error(err.message)
+      this.logger.error('Rabbitmq disconnected', err)
     })
   },
   async started () {
@@ -59,12 +60,14 @@ module.exports = {
         const routingKey = msg.fields.routingKey
         const refName = routingKey.split('.')[1]
         const item = aliases[refName]
-        await this.broker.call(item.subscriber, JSON.parse(msg.content.toString())).catch(err => {
-          ack(err.message)
+        try {
+          await this.broker.call(item.subscriber, JSON.parse(msg.content.toString()))
+          ack()
+          return true
+        } catch (e) {
+          ack(e.message)
           return false
-        })
-        ack()
-        return false
+        }
       })
       this.metadata.$rabbitmq.bindToExchange(binding.target, binding.exchange, binding.key)
       return true
