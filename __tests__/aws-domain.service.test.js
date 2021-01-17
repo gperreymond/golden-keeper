@@ -35,7 +35,7 @@ describe('service AwsDomain, action CollectAwsEc2InstancesPricingByRegionCommand
     expect(error).toEqual(undefined)
     expect(status).toEqual(true)
     expect(source).toEqual('AwsDomain.CollectAwsEc2InstancesPricingByRegionCommand')
-    expect(result).toEqual(true)
+    expect(result).toEqual(null)
   })
 })
 
@@ -82,7 +82,7 @@ describe('service AwsDomain, action CollectAwsEc2InstancesDetailsByRegionCommand
     expect(error).toEqual(undefined)
     expect(status).toEqual(true)
     expect(source).toEqual('AwsDomain.CollectAwsEc2InstancesDetailsByRegionCommand')
-    expect(result).toEqual(true)
+    expect(result).toEqual(null)
   })
   test('should return an good result', async () => {
     AWSMock.mock('EC2', 'describeInstances', function (params, callback) {
@@ -93,6 +93,6 @@ describe('service AwsDomain, action CollectAwsEc2InstancesDetailsByRegionCommand
     expect(error).toEqual(undefined)
     expect(status).toEqual(true)
     expect(source).toEqual('AwsDomain.CollectAwsEc2InstancesDetailsByRegionCommand')
-    expect(result).toEqual(true)
+    expect(result).toEqual(null)
   })
 })

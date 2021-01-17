@@ -76,7 +76,7 @@ module.exports = {
           source: ctx.action.name,
           date: new Date(),
           duration: Date.now() - ctx.meta.start,
-          result: cqrs.type === 'Query' ? res : false
+          result: cqrs.type === 'Query' ? res : null
         }
       }
       // Not CQRS

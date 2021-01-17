@@ -1,7 +1,7 @@
 const AWS = require('aws-sdk')
 const { camelCase } = require('lodash')
 
-const { Query } = require('../../../utils')
+const { Command } = require('../../../utils')
 
 const describeInstancesSync = (region, params) => {
   return new Promise((resolve, reject) => {
@@ -16,8 +16,6 @@ const describeInstancesSync = (region, params) => {
 const handler = async function (ctx) {
   // Extract some data
   const { region = 'eu-west-1' } = ctx.params
-  // Generate uuid
-  ctx.params.id = ctx.broker.generateUid()
   // Call aws sdk
   const params = {
     MaxResults: 9999
@@ -85,10 +83,14 @@ const handler = async function (ctx) {
     current += 1
   } while (current < total)
   // Return the result
-  return true
+  return {
+    aggregateID: `urn:golden-keeper:aws-ec2-instances-details:${region}`
+  }
 }
 
-const query = new Query()
-query.setHandler(handler)
+const command = new Command()
+command.setEventType('AwsEc2InstancesDetailsByRegionCollected')
+command.setAggregateType('AwsEc2InstancesDetails')
+command.setHandler(handler)
 
-module.exports = query
+module.exports = command

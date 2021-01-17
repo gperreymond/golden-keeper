@@ -1,12 +1,10 @@
 const axios = require('axios')
 
-const { Query } = require('../../../utils')
+const { Command } = require('../../../utils')
 
 const handler = async function (ctx) {
   // Extract some data
   const { region = 'eu-west-1' } = ctx.params
-  // Generate uuid
-  ctx.params.id = ctx.broker.generateUid()
   // Call aws for princing
   const AWS_PRINCING_URL = `https://a0.p.awsstatic.com/pricing/1.0/ec2/region/${region}/ondemand/linux/index.json`
   const { data: { prices = [] } } = await axios.get(AWS_PRINCING_URL)
@@ -39,7 +37,7 @@ const handler = async function (ctx) {
   return true
 }
 
-const query = new Query()
-query.setHandler(handler)
+const command = new Command()
+command.setHandler(handler)
 
-module.exports = query
+module.exports = command

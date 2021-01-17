@@ -20,6 +20,13 @@ module.exports = {
       }
     }
   },
+  events: {
+    'Eventstore.InsertEvent': {
+      handler (ctx) {
+        console.log(ctx.params)
+      }
+    }
+  },
   actions: {
     AwsEcs2InstancePublisher: {
       cache: false,
