@@ -9,9 +9,9 @@ module.exports = {
       cache: false,
       ...require('../../cqrs/domains/aws/commands/CollectAwsEc2InstancesDetailsByRegionCommand').getAction()
     },
-    GetAwsEc2InstancesPricingByRegionCommand: {
+    CollectAwsEc2InstancesPricingByRegionCommand: {
       cache: false,
-      ...require('../../cqrs/domains/aws/commands/GetAwsEc2InstancesPricingByRegionCommand').getAction()
+      ...require('../../cqrs/domains/aws/commands/CollectAwsEc2InstancesPricingByRegionCommand').getAction()
     }
     // Queries
   }

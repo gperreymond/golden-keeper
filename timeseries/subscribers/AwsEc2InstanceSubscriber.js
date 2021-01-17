@@ -1,10 +1,31 @@
 const handler = async function (ctx) {
   try {
-    await ctx.broker.call('RethinkDBAdapterAwsEc2Instances.create', ctx.params)
+    const { labels: { region, instanceId } = { labels: {} } } = ctx.params
+    const result = await ctx.broker.call('RethinkDBAdapterAwsEc2Instances.find', {
+      query: {
+        labels: {
+          region,
+          instanceId
+        }
+      }
+    })
+    let item = false
+    switch (result.length) {
+      case 0:
+        await ctx.broker.call('RethinkDBAdapterAwsEc2Instances.create', ctx.params)
+        break
+      case 1:
+        item = result[0]
+        ctx.params.id = item.id
+        await ctx.broker.call('RethinkDBAdapterAwsEc2Instances.update', ctx.params)
+        break
+      default:
+        throw new Error('RethinkDBAdapterAwsEc2Instances: Error found multiple entries')
+    }
     return true
   } catch (e) {
     this.logger.error(e.message)
-    return Promise.reject(e)
+    return false
   }
 }
 

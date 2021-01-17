@@ -29,12 +29,12 @@ afterAll(async () => {
   await broker.stop()
 })
 
-describe('service AwsDomain, action GetAwsEc2InstancesPricingByRegionCommand', () => {
+describe('service AwsDomain, action CollectAwsEc2InstancesPricingByRegionCommand', () => {
   test('should return an good result', async () => {
-    const { result, error, source, status } = await broker.call('AwsDomain.GetAwsEc2InstancesPricingByRegionCommand')
+    const { result, error, source, status } = await broker.call('AwsDomain.CollectAwsEc2InstancesPricingByRegionCommand')
     expect(error).toEqual(undefined)
     expect(status).toEqual(true)
-    expect(source).toEqual('AwsDomain.GetAwsEc2InstancesPricingByRegionCommand')
+    expect(source).toEqual('AwsDomain.CollectAwsEc2InstancesPricingByRegionCommand')
     expect(result).toEqual(true)
   })
 })
