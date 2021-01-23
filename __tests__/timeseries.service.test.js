@@ -9,7 +9,7 @@ const broker = new ServiceBroker({
 
 beforeAll(async () => {
   await broker.createService({
-    name: 'RethinkDBAdapterAwsEc2Instances',
+    name: 'RethinkDBAdapterAwsEc2InstancesDetails',
     actions: {
       find: async (ctx) => {
         const { query: { labels: { region } } } = ctx.params
@@ -56,7 +56,7 @@ afterAll(async () => {
 Timeseries.AwsEcs2InstanceDetailsPublisher
 **/
 
-describe('service Timeseries, action AwsEcs2InstancePublisher', () => {
+describe('service Timeseries, action AwsEcs2InstanceDetailsPublisher', () => {
   test('should return "true", subscriber return []', async () => {
     const result = await broker.call('Timeseries.AwsEcs2InstanceDetailsPublisher', { labels: { region: 'aws-test-1' } })
     expect(result).toEqual(true)
