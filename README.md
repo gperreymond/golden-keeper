@@ -11,11 +11,11 @@ r.db("golden_keeper")
   .filter({ labels: { instanceType: "m5.4xlarge" } })
 
 r.db("golden_keeper")
-  .table("aws_ec2_instances")
+  .table("aws_ec2_instances_details")
   .filter({ labels: { instanceId: "i-040489825c19493d8" } })
 
 r.db("golden_keeper")
-  .table("aws_ec2_instances")
+  .table("aws_ec2_instances_details")
   .innerJoin(r.db("golden_keeper").table("aws_ec2_instances_pricing"), function(instanceRow, pricingRow) {
     return instanceRow("labels")("instanceType").match(pricingRow("labels")("instanceType"))
   })

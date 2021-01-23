@@ -9,7 +9,7 @@ const broker = new ServiceBroker({
 })
 
 beforeAll(async () => {
-  await broker.createService(require('../services/rethinkdb-aws-ec2-instances.service'))
+  await broker.createService(require('../services/rethinkdb-aws-ec2-instances-details.service'))
   await broker.start()
 })
 
@@ -17,7 +17,7 @@ afterAll(async () => {
   await broker.stop()
 })
 
-describe('service rethinkdb-aws-ec2-instances', () => {
+describe('service rethinkdb-aws-ec2-instances-details', () => {
   test('should connect', async () => {
     expect(true).toEqual(true)
   })

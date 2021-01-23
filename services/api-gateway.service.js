@@ -38,7 +38,9 @@ module.exports = {
       mappingPolicy: 'restrict',
       aliases: {
         'GET status/liveness': 'ApiGateway.GetStatusLiveness',
-        'GET status/Readiness': 'ApiGateway.GetStatusReadiness'
+        'GET status/Readiness': 'ApiGateway.GetStatusReadiness',
+        'GET api/v1/aws/instances/details': 'RethinkDBAdapterAwsEc2InstancesDetails.find',
+        'GET api/v1/aws/instances/pricing': 'RethinkDBAdapterAwsEc2InstancesPicing.find'
       }
     }]
   }

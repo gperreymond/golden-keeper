@@ -79,7 +79,7 @@ const handler = async function (ctx) {
       delete timeserie.labels.tags
       return true
     })
-    await this.broker.call('Timeseries.AwsEcs2InstancePublisher', timeserie)
+    await this.broker.call('Timeseries.AwsEcs2InstanceDetailsPublisher', timeserie)
     current += 1
   } while (current < total)
   // Return the result

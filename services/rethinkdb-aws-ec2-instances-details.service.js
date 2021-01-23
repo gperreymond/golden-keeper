@@ -4,7 +4,7 @@ const RethinkDBAdapter = require('moleculer-db-adapter-rethinkdb')
 const { rethinkdb } = require('../application.config')
 
 module.exports = {
-  name: 'RethinkDBAdapterAwsEc2Instances',
+  name: 'RethinkDBAdapterAwsEc2InstancesDetails',
   mixins: [DbService],
   adapter: new RethinkDBAdapter({
     host: rethinkdb.hostname,
@@ -13,5 +13,5 @@ module.exports = {
     password: rethinkdb.password
   }),
   database: rethinkdb.database,
-  table: 'aws_ec2_instances'
+  table: 'aws_ec2_instances_details'
 }

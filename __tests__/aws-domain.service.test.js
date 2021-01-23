@@ -16,18 +16,36 @@ beforeAll(async () => {
       AwsEcs2InstancePricingPublisher: {
         handler: (ctx) => true
       },
-      AwsEcs2InstancePublisher: {
+      AwsEcs2InstanceDetailsPublisher: {
         handler: (ctx) => true
       }
     }
   })
-  await broker.createService(require('../services/cqrs/aws-domain.service'))
+  await broker.createService(require('../services/aws-domain.service'))
   await broker.start()
 })
 
 afterAll(async () => {
   await broker.stop()
 })
+
+/**
+AwsDomain.GetAwsEc2InstancesListQuery
+**/
+
+describe('service AwsDomain, action GetAwsEc2InstancesListQuery', () => {
+  test('should return an good result', async () => {
+    const { result, error, source, status } = await broker.call('AwsDomain.GetAwsEc2InstancesListQuery')
+    expect(error).toEqual(undefined)
+    expect(status).toEqual(true)
+    expect(source).toEqual('AwsDomain.GetAwsEc2InstancesListQuery')
+    expect(result).toEqual(true)
+  })
+})
+
+/**
+AwsDomain.CollectAwsEc2InstancesPricingByRegionCommand
+**/
 
 describe('service AwsDomain, action CollectAwsEc2InstancesPricingByRegionCommand', () => {
   test('should return an good result', async () => {
@@ -38,6 +56,10 @@ describe('service AwsDomain, action CollectAwsEc2InstancesPricingByRegionCommand
     expect(result).toEqual(null)
   })
 })
+
+/**
+AwsDomain.CollectAwsEc2InstancesDetailsByRegionCommand
+**/
 
 describe('service AwsDomain, action CollectAwsEc2InstancesDetailsByRegionCommand', () => {
   test('should return an error from ec2.describeInstances()', async () => {

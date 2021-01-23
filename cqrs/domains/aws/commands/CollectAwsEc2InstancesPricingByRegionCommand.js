@@ -34,7 +34,9 @@ const handler = async function (ctx) {
     current += 1
   } while (current < total)
   // Return the result
-  return true
+  return {
+    aggregateID: `urn:golden-keeper:aws-ec2-instances-pricing:${region}`
+  }
 }
 
 const command = new Command()

@@ -11,9 +11,17 @@ beforeAll(async () => {
   await broker.createService({
     name: 'RethinkDBAdapterAwsEc2Instances',
     actions: {
-      create: (ctx) => {
-        const { RethinkDBAdapterAwsEc2Instances: error } = ctx.params
-        if (error) { return Promise.reject(new Error('An error occured')) }
+      find: async (ctx) => {
+        const { query: { labels: { region } } } = ctx.params
+        if (region === 'aws-test-1') return []
+        if (region === 'aws-test-2') return [{}]
+        if (region === 'aws-test-3') return [{}, {}]
+        return Promise.reject(new Error('An error occured'))
+      },
+      update: async (ctx) => {
+        return true
+      },
+      create: async (ctx) => {
         return true
       }
     }
@@ -44,32 +52,47 @@ afterAll(async () => {
   await broker.stop()
 })
 
-describe('service Timeseries', () => {
-  test('should call action AwsEcs2InstancePublisher, and return "true"', async () => {
-    const result = await broker.call('Timeseries.AwsEcs2InstancePublisher')
+/**
+Timeseries.AwsEcs2InstanceDetailsPublisher
+**/
+
+describe('service Timeseries, action AwsEcs2InstancePublisher', () => {
+  test('should return "true", subscriber return []', async () => {
+    const result = await broker.call('Timeseries.AwsEcs2InstanceDetailsPublisher', { labels: { region: 'aws-test-1' } })
     expect(result).toEqual(true)
   })
-  test('should call action AwsEcs2InstancePublisher, and return "true" with an error occured on RethinkDBAdapterAwsEc2Instances', async () => {
-    const result = await broker.call('Timeseries.AwsEcs2InstancePublisher', { RethinkDBAdapterAwsEc2Instances: 'error' })
+  test('should return "true", subscriber return [{}]', async () => {
+    const result = await broker.call('Timeseries.AwsEcs2InstanceDetailsPublisher', { labels: { region: 'aws-test-2' } })
     expect(result).toEqual(true)
   })
-  test('should call action AwsEcs2InstancePublisher, and return "false"', async () => {
-    const result = await broker.call('Timeseries.AwsEcs2InstancePublisher', { error: true })
+  test('should cand return "true", subscriber return [{},{}]', async () => {
+    const result = await broker.call('Timeseries.AwsEcs2InstanceDetailsPublisher', { labels: { region: 'aws-test-3' } })
+    expect(result).toEqual(true)
+  })
+  test('should return "false"', async () => {
+    const result = await broker.call('Timeseries.AwsEcs2InstanceDetailsPublisher', { error: true })
     expect(result).toEqual(false)
   })
-  test('should call action AwsEcs2InstancePricingPublisher, and return "true", subscriber return []', async () => {
+})
+
+/**
+Timeseries.AwsEcs2InstancePricingPublisher
+**/
+
+describe('service Timeseries, action AwsEcs2InstancePricingPublisher', () => {
+  test('should return "true", subscriber return []', async () => {
     const result = await broker.call('Timeseries.AwsEcs2InstancePricingPublisher', { labels: { region: 'aws-test-1' } })
     expect(result).toEqual(true)
   })
-  test('should call action AwsEcs2InstancePricingPublisher, and return "true", subscriber return [{}]', async () => {
+  test('should return "true", subscriber return [{}]', async () => {
     const result = await broker.call('Timeseries.AwsEcs2InstancePricingPublisher', { labels: { region: 'aws-test-2' } })
     expect(result).toEqual(true)
   })
-  test('should call action AwsEcs2InstancePricingPublisher, and return "true", subscriber return [{},{}]', async () => {
+  test('should cand return "true", subscriber return [{},{}]', async () => {
     const result = await broker.call('Timeseries.AwsEcs2InstancePricingPublisher', { labels: { region: 'aws-test-3' } })
     expect(result).toEqual(true)
   })
-  test('should call action AwsEcs2InstancePricingPublisher, and return "false"', async () => {
+  test('should return "false"', async () => {
     const result = await broker.call('Timeseries.AwsEcs2InstancePricingPublisher', { error: true })
     expect(result).toEqual(false)
   })

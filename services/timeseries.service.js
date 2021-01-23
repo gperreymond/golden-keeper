@@ -8,10 +8,10 @@ module.exports = {
   settings: {
     ...rabbitmq,
     aliases: {
-      'timeseries-aws-ec2-instance': {
+      'timeseries-aws-ec2-instance-details': {
         type: 'direct',
-        publisher: 'Timeseries.AwsEcs2InstancePublisher',
-        subscriber: 'Timeseries.AwsEc2InstanceSubscriber'
+        publisher: 'Timeseries.AwsEcs2InstanceDetailsPublisher',
+        subscriber: 'Timeseries.AwsEc2InstanceDetailsSubscriber'
       },
       'timeseries-aws-ec2-instance-pricing': {
         type: 'direct',
@@ -20,21 +20,14 @@ module.exports = {
       }
     }
   },
-  events: {
-    'Eventstore.InsertEvent': {
-      handler (ctx) {
-        console.log(ctx.params)
-      }
-    }
-  },
   actions: {
-    AwsEcs2InstancePublisher: {
+    AwsEcs2InstanceDetailsPublisher: {
       cache: false,
-      ...require('../timeseries/publishers/AwsEcs2InstancePublisher')
+      ...require('../timeseries/publishers/AwsEcs2InstanceDetailsPublisher')
     },
-    AwsEc2InstanceSubscriber: {
+    AwsEc2InstanceDetailsSubscriber: {
       cache: false,
-      ...require('../timeseries/subscribers/AwsEc2InstanceSubscriber')
+      ...require('../timeseries/subscribers/AwsEc2InstanceDetailsSubscriber')
     },
     AwsEcs2InstancePricingPublisher: {
       cache: false,
