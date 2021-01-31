@@ -6,17 +6,19 @@ module.exports = {
   name: 'Timeseries',
   mixins: [RabbitMQMixin],
   settings: {
-    ...rabbitmq,
-    aliases: {
-      'timeseries-aws-ec2-instance-details': {
-        type: 'direct',
-        publisher: 'Timeseries.AwsEcs2InstanceDetailsPublisher',
-        subscriber: 'Timeseries.AwsEc2InstanceDetailsSubscriber'
-      },
-      'timeseries-aws-ec2-instance-pricing': {
-        type: 'direct',
-        publisher: 'Timeseries.AwsEcs2InstancePricingPublisher',
-        subscriber: 'Timeseries.AwsEc2InstancePricingSubscriber'
+    rabbitmq: {
+      ...rabbitmq,
+      aliases: {
+        'timeseries-aws-ec2-instance-details': {
+          type: 'direct',
+          publisher: 'Timeseries.AwsEcs2InstanceDetailsPublisher',
+          subscriber: 'Timeseries.AwsEc2InstanceDetailsSubscriber'
+        },
+        'timeseries-aws-ec2-instance-pricing': {
+          type: 'direct',
+          publisher: 'Timeseries.AwsEcs2InstancePricingPublisher',
+          subscriber: 'Timeseries.AwsEc2InstancePricingSubscriber'
+        }
       }
     }
   },

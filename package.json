@@ -17,7 +17,7 @@
     "@hapi/boom": "9.1.1",
     "@hapi/hoek": "9.1.1",
     "@hapi/joi": "17.1.1",
-    "aws-sdk": "2.831.0",
+    "aws-sdk": "2.834.0",
     "axios": "0.21.1",
     "dotenv": "8.2.0",
     "fastest-validator": "1.9.0",
@@ -30,7 +30,7 @@
     "moleculer-db-adapter-rethinkdb": "0.2.9",
     "moleculer-repl": "0.6.4",
     "moleculer-web": "0.9.1",
-    "nconf": "0.11.1",
+    "nconf": "0.11.2",
     "rabbit-queue": "5.0.1",
     "rethinkdb": "2.4.2",
     "uuid": "8.3.2"
@@ -38,7 +38,6 @@
   "devDependencies": {
     "jest": "26.6.3",
     "jest-aws-sdk-mock": "1.0.2",
-    "rethink-mock": "0.1.0",
     "standard": "16.0.3"
   },
   "standard": {

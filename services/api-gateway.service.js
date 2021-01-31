@@ -5,18 +5,6 @@ const { moleculer: { port } } = require('../application.config')
 module.exports = {
   name: 'ApiGateway',
   mixins: [WebMixin],
-  actions: {
-    GetStatusLiveness (ctx) {
-      return {
-        live: true
-      }
-    },
-    GetStatusReadiness (ctx) {
-      return {
-        ready: true
-      }
-    }
-  },
   settings: {
     port,
     // Global CORS settings for all routes
@@ -37,10 +25,9 @@ module.exports = {
     routes: [{
       mappingPolicy: 'restrict',
       aliases: {
-        'GET status/liveness': 'ApiGateway.GetStatusLiveness',
-        'GET status/Readiness': 'ApiGateway.GetStatusReadiness',
-        'GET api/v1/aws/instances/details': 'RethinkDBAdapterAwsEc2InstancesDetails.find',
-        'GET api/v1/aws/instances/pricing': 'RethinkDBAdapterAwsEc2InstancesPicing.find'
+        'GET status/liveness': 'SystemDomain.GetStatusLivenessQuery',
+        'GET status/readiness': 'SystemDomain.GetStatusReadinessQuery',
+        'GET api/v1/aws/instances': 'AwsDomain.GetAwsEc2InstancesListQuery'
       }
     }]
   }

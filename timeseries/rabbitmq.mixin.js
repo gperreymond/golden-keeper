@@ -4,12 +4,14 @@ module.exports = {
   // Must overwrite it
   name: '',
   settings: {
-    hostname: '',
-    port: 0,
-    username: '',
-    password: '',
-    vhost: '',
-    aliases: {}
+    rabbitmq: {
+      hostname: '',
+      port: 0,
+      username: '',
+      password: '',
+      vhost: '',
+      aliases: {}
+    }
   },
   hooks: {
     before: {
@@ -29,7 +31,7 @@ module.exports = {
   },
   created () {
     this.logger.info('rabbitmq mixin created')
-    const options = `amqp://${this.settings.username}:${this.settings.password}@${this.settings.hostname}:${this.settings.port}`
+    const options = `amqp://${this.settings.rabbitmq.username}:${this.settings.rabbitmq.password}@${this.settings.rabbitmq.hostname}:${this.settings.rabbitmq.port}`
     this.metadata.$rabbitmq = new Rabbit(options, {
       prefetch: 1,
       replyPattern: false,
@@ -45,7 +47,7 @@ module.exports = {
   async started () {
     this.logger.info('rabbitmq mixin started')
     // Step 1: From aliases to bindins
-    const aliases = this.settings.aliases
+    const aliases = this.settings.rabbitmq.aliases
     const keys = Object.keys(aliases)
     keys.map(name => {
       const { type } = aliases[name]
