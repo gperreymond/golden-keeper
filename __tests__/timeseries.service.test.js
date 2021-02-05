@@ -8,42 +8,6 @@ const broker = new ServiceBroker({
 })
 
 beforeAll(async () => {
-  await broker.createService({
-    name: 'RethinkDBAdapterAwsEc2InstancesDetails',
-    actions: {
-      find: async (ctx) => {
-        const { query: { labels: { region } } } = ctx.params
-        if (region === 'aws-test-1') return []
-        if (region === 'aws-test-2') return [{}]
-        if (region === 'aws-test-3') return [{}, {}]
-        return Promise.reject(new Error('An error occured'))
-      },
-      update: async (ctx) => {
-        return true
-      },
-      create: async (ctx) => {
-        return true
-      }
-    }
-  })
-  await broker.createService({
-    name: 'RethinkDBAdapterAwsEc2InstancesPricing',
-    actions: {
-      find: async (ctx) => {
-        const { query: { labels: { region } } } = ctx.params
-        if (region === 'aws-test-1') return []
-        if (region === 'aws-test-2') return [{}]
-        if (region === 'aws-test-3') return [{}, {}]
-        return Promise.reject(new Error('An error occured'))
-      },
-      update: async (ctx) => {
-        return true
-      },
-      create: async (ctx) => {
-        return true
-      }
-    }
-  })
   await broker.createService(require('../services/timeseries.service'))
   await broker.start()
 })

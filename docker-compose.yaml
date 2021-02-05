@@ -2,17 +2,17 @@ version: "3.7"
 
 services:
 
-  rethinkdb:
-    image: "rethinkdb:2.4.1-buster-slim"
+  elasticsearch:
+    image: "docker.elastic.co/elasticsearch/elasticsearch:7.10.2"
     restart: "always"
-    command: "rethinkdb --bind all --initial-password ${APP_RETHINKDB_PASSWORD}"
+    environment:
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    volumes:
+      - "elasticsearch_data:/usr/share/elasticsearch/data"
     networks:
       - "public"
-    volumes:
-      - "rethinkdb_data:/data"
     ports:
-      - "8080:8080/tcp"
-      - "28015:28015/tcp"
+      - "9200:9200/tcp"
 
   rabbitmq:
     image: "rabbitmq:3.7.17-management-alpine"
@@ -22,14 +22,14 @@ services:
       RABBITMQ_DEFAULT_USER: "${APP_RABBITMQ_USERNAME}"
       RABBITMQ_DEFAULT_PASS: "${APP_RABBITMQ_PASSWORD}"
     networks:
-      - public
+      - "public"
     ports:
       - "5672:5672/tcp"
       - "15672:15672/tcp"
 
 volumes:
 
-  rethinkdb_data:
+  elasticsearch_data:
 
 networks:
 
